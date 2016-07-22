@@ -1,0 +1,8 @@
+{
+  "name": "tmpc",
+  "version": "0.1.0",
+  "main": "tmpc.js",
+  "devDependencies": {
+    "mpd": "^1.3.0"
+  }
+}
