@@ -1,0 +1,17 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+    {
+	"name": "Launch main.js",
+	"type": "node",
+	"program": "${workspaceRoot}\\tmpc.js",
+	"stopOnEntry": false,
+	"args": [],
+	"cwd": "${workspaceRoot}",
+	"runtimeExecutable": "C:\\users\\Andrey\\AppData\\Roaming\\npm\\node_modules\\electron-prebuilt\\dist\\electron.exe",
+	"runtimeArgs": [],
+	"env": { },
+	"sourceMaps": false,
+	"outDir": null
+   }]
+}

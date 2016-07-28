@@ -3,4 +3,23 @@ body{
 	background:black;
 	justify-content:stretch;
 	align-items:stretch;
+	flex-flow:column nowrap;
+	color:white;
+}
+.hgrid{
+	flex: 1 0 auto;
+	display:flex;
+	justify-content:stretch;
+	align-items:center;
+	flex-flow:row nowrap;
+}
+.mode-content{
+	flex:1 0 auto;
+	text-align: center;	
+}
+.mode-bar{
+	flex:0 0 80px;
+}
+.status{
+	flex:0 0 20px;
 }
