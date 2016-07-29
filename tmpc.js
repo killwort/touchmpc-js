@@ -1,20 +1,19 @@
 const electron = require('electron');
 const {app, BrowserWindow, ipcMain} = electron;
 const mpd = require('mpd');
+const config = require('./js/config');
 let win;
 
-var connectionSettings = {
-  port: 6600,
-  host: 'router.mediaparts'
-};
 let mpdClient;
 ipcMain.on('interface-ready', event => {
-  mpdClient = mpd.connect(connectionSettings);
-  mpdClient.on('ready', () => {
-    event.sender.send('mpd-ready')
+  config.getConfig().then(connectionSettings => {
+    mpdClient = mpd.connect(connectionSettings.mpd);
+    mpdClient.on('ready', () => {
+      event.sender.send('mpd-ready')
+    });
+    mpdClient.on('system', name => event.sender.send('mpd-update', name));
+    mpdClient.on('error', () => event.sender.send('mpd-error', arguments));
   });
-  mpdClient.on('system', name => event.sender.send('mpd-update', name));
-  mpdClient.on('error', () => event.sender.send('mpd-error', arguments));
 });
 ipcMain.on('mpd-command', (event, cmd, args, reqId) => {
   if (mpdClient)

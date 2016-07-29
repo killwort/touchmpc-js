@@ -1,6 +1,9 @@
 const backbone = require('backbone');
 const songModel = require('../js/songModel');
 module.exports = backbone.Collection.extend({
+    modelId:function(attrs){
+        return attrs['Id'];
+    },
     fetch: function () {
         mpdCommand('playlistinfo').then(resp => {
             var props = formatResponse(resp.data);

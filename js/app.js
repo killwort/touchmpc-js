@@ -2,6 +2,9 @@ const ipc = require('electron').ipcRenderer;
 const _ = require('lodash');
 const util = require('util');
 const backbone = require('backbone');
+const $=require('jquery');
+const config = require('../js/config');
+
 backbone.$ = require('jquery');
 
 let currentView = null;
@@ -63,3 +66,6 @@ window.mpdCommand = function (command, args) {
 window.formatResponse=function(data){
     return _.map(data.split('\n'), kv => _.each(kv.split(': '), v => {return v.trim();}));
 };
+config.getConfig().then(config=>{
+    $('.mode-bar button.'+(config.startingMode||'nowPlaying')).click();
+});

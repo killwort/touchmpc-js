@@ -23,3 +23,15 @@ body{
 .status{
 	flex:0 0 20px;
 }
+.progress-underlay{
+	display:block;
+	height:5px;
+	background:#555;
+}
+.progress-underlay .progress-overlay{
+	display:block;
+	height:5px;
+	background:#eee;
+	width:100%;
+	transition: max-width linear 0.2s;
+}
