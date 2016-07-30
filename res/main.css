@@ -1,37 +1,110 @@
-body{
-	display:flex;
-	background:black;
-	justify-content:stretch;
-	align-items:stretch;
-	flex-flow:column nowrap;
-	color:white;
+body {
+  display: flex;
+  background: black;
+  justify-content: center;
+  align-items: stretch;
+  flex-flow: column nowrap;
+  color: white;
+  cursor: default;
 }
-.hgrid{
-	flex: 1 0 auto;
-	display:flex;
-	justify-content:stretch;
-	align-items:center;
-	flex-flow:row nowrap;
+body .hgrid {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-flow: row nowrap;
 }
-.mode-content{
-	flex:1 0 auto;
-	text-align: center;	
+body .mode-content {
+  flex: 1 0 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: stretch;
+  justify-content: center;
 }
-.mode-bar{
-	flex:0 0 80px;
+body .mode-bar {
+  flex: 0 0 80px;
 }
-.status{
-	flex:0 0 20px;
+body .status {
+  flex: 0 0 20px;
 }
-.progress-underlay{
-	display:block;
-	height:5px;
-	background:#555;
+
+.nowPlaying {
+  flex: 1 0 auto;
+  position: relative;
 }
-.progress-underlay .progress-overlay{
-	display:block;
-	height:5px;
-	background:#eee;
-	width:100%;
-	transition: max-width linear 0.2s;
+.nowPlaying.layout-h {
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: stretch;
+  justify-content: center;
+}
+.nowPlaying.layout-h .art-container {
+  flex: 1 0 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: stretch;
+  justify-content: center;
+}
+.nowPlaying.layout-h .art-container .art {
+  flex: 1 0 auto;
+}
+.nowPlaying.layout-h .controls-container {
+  position: absolute;
+}
+.nowPlaying.layout-h .metadata-container {
+  flex: 0 0 auto;
+}
+.nowPlaying.layout-h .progress-container {
+  flex: 0 0 30px;
+}
+.nowPlaying .progress-container .progress-underlay {
+  display: block;
+  height: 5px;
+  background: #555;
+}
+.nowPlaying .progress-container .progress-underlay .progress-overlay {
+  display: block;
+  height: 5px;
+  background: #eee;
+  width: 100%;
+  transition: max-width linear 0.2s;
+}
+.nowPlaying .metadata-container {
+  font-weight: bold;
+}
+.nowPlaying .metadata-container .metadata-artist:before {
+  content: ' by ';
+  font-weight: normal;
+}
+.nowPlaying .metadata-container .metadata-album:before {
+  content: ' from ';
+  font-weight: normal;
+}
+.nowPlaying .controls-container .control {
+  transition: all ease .3s;
+  padding: .5em;
+  cursor: pointer;
+  width: 1em;
+  height: 1em;
+  text-align: center;
+}
+.nowPlaying .controls-container .control.toggle {
+  color: #777;
+  cursor: pointer;
+}
+.nowPlaying .controls-container .control.toggle.active {
+  color: #eee;
+}
+.nowPlaying .controls-container .control.playback {
+  border: 2px solid #eee;
+  box-shadow: 0 0 27px rgba(65, 135, 255, 0);
+  border-radius: 2em;
+}
+.nowPlaying .controls-container .control.playback.disabled {
+  color: #555;
+}
+.nowPlaying .controls-container .control.playback:hover {
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 27px #4187ff;
 }

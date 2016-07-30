@@ -1,9 +1,21 @@
-<div>
-    <img src="" data-attr="art" data-attribute="src" />
+<div class="art-container">
+	<img class="art" src="" data-attr="art" data-attribute="src" />
 </div>
-<span class="fa fa-repeat command-repeat"></span>
-<span class="fa fa-shuffle command-shuffle"></span>
-<span data-attr="songModel.Title"></span>
-<span class="progress-underlay">
-    <span class="progress-overlay" data-attr="percent" data-css-property="max-width"></span>
-</span>
+<div class="controls-container">
+	<span class="fa fa-repeat command-repeat control toggle" data-attr="repeat" data-css-class="active"></span>
+	<span class="fa fa-random command-shuffle control toggle" data-attr="random" data-css-class="active"></span>
+	<span class="fa fa-fast-backward command-previous control playback"></span>
+	<span class="fa fa-stop command-stop control playback" data-attr="state" data-css-class="disabled" data-true-value="stopped"></span>
+	<span class="fa fa-play command-play control playback" data-attr="state" data-css-class="disabled" data-true-value="playing"></span>
+	<span class="fa fa-fast-forward command-next control playback"></span>
+</div>
+<div class="metadata-container">
+	<span class="metadata-title" data-attr="songModel.Title"></span>
+	<span class="metadata-artist" data-attr="songModel.Artist"></span>
+	<span class="metadata-album" data-attr="songModel.Album"></span>
+</div>
+<div class="progress-container">
+	<span class="progress-underlay">
+		<span class="progress-overlay" data-attr="percent" data-css-property="max-width"></span>
+	</span>
+</div>

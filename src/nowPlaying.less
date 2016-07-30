@@ -1,0 +1,113 @@
+.nowPlaying {
+    flex: 1 0 auto;
+    position: relative;
+
+    &.layout-v {
+    }
+
+    &.layout-h {
+        display: flex;
+        flex-flow: column nowrap;
+        align-content: stretch;
+        justify-content: center;
+
+        .art-container {
+            flex: 1 0 auto;
+            display: flex;
+            flex-flow: column nowrap;
+            align-content: stretch;
+            justify-content: center;
+
+            .art {
+                flex:1 0 auto;
+                object-fit:contain;
+            }
+        }
+
+        .controls-container {
+            position: absolute;
+        }
+
+        .metadata-container {
+            flex: 0 0 auto;
+        }
+
+        .progress-container {
+            flex: 0 0 30px;
+        }
+    }
+
+
+    .progress-container {
+        .progress-underlay {
+            display: block;
+            height: 5px;
+            background: #555;
+
+            .progress-overlay {
+                display: block;
+                height: 5px;
+                background: #eee;
+                width: 100%;
+                transition: max-width linear 0.2s;
+            }
+        }
+    }
+
+    .metadata-container {
+        font-weight: bold;
+
+        .metadata-title {
+        }
+
+        .metadata-artist {
+            &:before {
+                content: ' by ';
+                font-weight: normal;
+            }
+        }
+
+        .metadata-album {
+            &:before {
+                content: ' from ';
+                font-weight: normal;
+            }
+        }
+    }
+
+    .controls-container {
+        .control {
+            transition: all ease .3s;
+            padding: .5em;
+            cursor: pointer;
+            width: 1em;
+            height: 1em;
+            text-align: center;
+
+            &.toggle {
+                color: #777;
+                cursor: pointer;
+
+                &.active {
+                    color: #eee;
+                }
+            }
+
+            &.playback {
+                border: 2px solid #eee;
+                box-shadow: 0 0 27px rgba(65,135,255,0);
+                border-radius: 2em;
+
+                &.disabled {
+                    color: #555;
+                }
+
+                &:hover {
+                    color: #fff;
+                    border-color: #fff;
+                    box-shadow: 0 0 27px rgba(65,135,255,1);
+                }
+            }
+        }
+    }
+}
