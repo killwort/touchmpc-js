@@ -86,6 +86,7 @@ module.exports = backbone.View.extend({
                 status.art = that.artFetchCache[cacheKey].art;
             }
             status.percent = timeParts.length == 2 ? (timeParts[0] * 100 / timeParts[1]) + '%' : 0;
+            console.log(status);
             _.each(that.$('[data-attr]'), elem => {
                 let value = status;
                 elem = backbone.$(elem);
@@ -96,14 +97,15 @@ module.exports = backbone.View.extend({
                     else
                         value = value[path[i]];
                 }
-                if (elem.data('css-property'))
-                    elem.css(elem.data('css-property'), value);
-                else if (elem.data('css-class'))
-                    elem.toggleClass(elem.data('css-class'),value==(elem.data('true-value')||1));
-                else if (elem.data('attribute')){
-                    if(elem.attr(elem.data('attribute'))!=value)
+                if (elem.data('css-property')) {
+                    elem.css(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
+                    console.log(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
+                } else if (elem.data('css-class'))
+                    elem.toggleClass(elem.data('css-class'), value == (elem.data('true-value') || 1));
+                else if (elem.data('attribute')) {
+                    if (elem.attr(elem.data('attribute')) != value)
                         elem.attr(elem.data('attribute'), value);
-                }else
+                } else
                     elem.text(value);
 
             });

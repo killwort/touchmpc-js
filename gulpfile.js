@@ -1,3 +1,4 @@
+/// <binding AfterBuild='default' />
 var gulp=require('gulp');
 var less=require('gulp-less');
 var _concat=require('gulp-concat');

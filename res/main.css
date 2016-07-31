@@ -47,9 +47,19 @@ body .status {
 }
 .nowPlaying.layout-h .art-container .art {
   flex: 1 0 auto;
+  object-fit: contain;
 }
 .nowPlaying.layout-h .controls-container {
   position: absolute;
+  font-size: 24px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: space-between;
+  justify-content: flex-end;
 }
 .nowPlaying.layout-h .metadata-container {
   flex: 0 0 auto;
