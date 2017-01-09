@@ -6,13 +6,6 @@ const configFile = path.join(process.env.HOME || process.env.USERPROFILE, '.touc
 
 module.exports = {
     getConfig: function () {
-        return Promise.resolve({
-                        mpd: {
-                            port: 6600,
-                            host: 'router.mediaparts'
-                        },
-                        startingMode:'nowPlaying'
-                    });
         return new Promise((resolve, reject) => {
             mkdirp(path.dirname(configFile), function () {
                 if (!fs.existsSync(configFile)) {
