@@ -8,8 +8,12 @@ let mpdClient;
 ipcMain.on('interface-ready', event => {
   config.getConfig().then(connectionSettings => {
     mpdClient = mpd.connect(connectionSettings.mpd);
+    mpdClient.on('error',()=>{
+      console.log('IPC error',arguments);
+    });
     mpdClient.on('ready', () => {
-      event.sender.send('mpd-ready')
+      event.sender.send('mpd-ready');
+      console.log('IPC ready');
     });
     mpdClient.on('system', name => event.sender.send('mpd-update', name));
     mpdClient.on('error', () => event.sender.send('mpd-error', arguments));
@@ -17,9 +21,13 @@ ipcMain.on('interface-ready', event => {
 });
 ipcMain.on('mpd-command', (event, cmd, args, reqId) => {
   if (mpdClient)
-    mpdClient.sendCommand(mpd.cmd(cmd, args), (err, message) => {
-      event.sender.send('mpd-command-response', err, message, reqId);
-    });
+    try {
+      mpdClient.sendCommand(mpd.cmd(cmd, args), (err, message) => {
+        event.sender.send('mpd-command-response', err, message, reqId);
+      });
+    } catch (e) {
+      event.sender.send('mpd-command-response', 'error', JSON.stringify(e), reqId);
+    }
   else
     event.sender.send('mpd-command-response', 'not connected', null, reqId);
 });

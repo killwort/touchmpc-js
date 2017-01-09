@@ -12,15 +12,18 @@ let views = {};
 
 _.each(document.querySelectorAll('.mode-bar button'), btn => {
     btn.addEventListener('click', function (ev) {
-        var newViewName = ev.target.className;
-
+        var t = $(ev.target);
+        if (!t.is('button')) t = t.closest('button');
+        var newViewName = t.data('view');
+        $('.mode-bar button').removeClass('active');
+        t.addClass('active');
         if (!views[newViewName]) {
             var viewClass = require('../js/' + newViewName);
-            console.log(viewClass);
             views[newViewName] = new viewClass();
         }
         if (currentView == views[newViewName])
             return;
+        config.patchConfig({ startingMode: newViewName });
         let showNew = () => {
             currentView = views[newViewName];
             _.each(document.getElementsByClassName('mode-content')[0].childNodes, n => document.getElementsByClassName('mode-content')[0].removeChild(n));
@@ -36,22 +39,22 @@ _.each(document.querySelectorAll('.mode-bar button'), btn => {
 });
 ipc.send('interface-ready');
 ipc.on('mpd-ready', (event, b, c) => {
-    console.log("We're connected!");
-    document.getElementsByClassName('status')[0].innerHTML = "Connected!";
+    $('.status').text("Connected!");
 });
 ipc.on('mpd-error', (event, b, c) => {
-    console.log("Error connecting");
-    document.getElementsByClassName('status')[0].innerHTML = "Error!";
+    $('.status').text("Error!");
 });
 ipc.on('mpd-update', (event, system) => {
-    if (currentView) currentView.trigger('mpd-update', system);
-    document.getElementsByClassName('status')[0].innerHTML = "Update!";
+    $('.status').text("Update!");
 });
 let callbacks = {};
+let cmds={};
 ipc.on('mpd-command-response', (event, err, data, reqId) => {
-    //console.log('RCV', reqId, event, err, data);
+    /*if(cmds[reqId].command!='status')
+        console.log('CMD',cmds[reqId].command,cmds[reqId].args,'->', err, data);*/
     callbacks[reqId](event, err, data);
     delete callbacks[reqId];
+    delete cmds[reqId];
 });
 window.mpdCommand = function (command, args) {
     return new Promise((resolve, reject) => {
@@ -59,13 +62,15 @@ window.mpdCommand = function (command, args) {
         callbacks[reqId] = function (event, err, data) {
             resolve({ err: err, data: data });
         };
-        //console.log('SND', reqId, command, args);
+        cmds[reqId]={command:command,args:args};
+        /*if(command!='status')
+            console.log('SND', reqId, command, args);*/
         ipc.send('mpd-command', command, args || [], reqId);
     });
 };
 window.formatResponse=function(data){
-    return _.map(data.split('\n'), kv => _.each(kv.split(': '), v => {return v.trim();}));
+    return _.map((data||'').split('\n'), kv => _.each(kv.split(': '), v => {return v.trim();}));
 };
 config.getConfig().then(config=>{
-    $('.mode-bar button.'+(config.startingMode||'nowPlaying')).click();
+    $('.mode-bar button[data-view='+(config.startingMode||'nowPlaying')+']').click();
 });

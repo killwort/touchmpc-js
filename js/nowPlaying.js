@@ -1,4 +1,5 @@
 const backbone = require('backbone');
+const $ = backbone.$;
 const ipc = require('electron').ipcRenderer;
 const artFetcher=require('../js/artFetcher');
 module.exports = backbone.View.extend({
@@ -10,12 +11,12 @@ module.exports = backbone.View.extend({
         'click .command-play':'playPlay',
         'click .command-next':'playNext'
     },
-    className:'nowPlaying',
+    className:'nowPlaying animated-mode',
     initialize: function () {
         this.render();
         this.on('mpd-update', this.update);
         this.on('showing', this.show);
-        this.on('hiding', this.hide);
+        this.on('hide', this.hide);
         $(window).on('resize',_.bind(this.fixLayout,this));
         this.playlistModel = new (require('../js/playlistModel'))();
         this.playlistModel.fetch();
@@ -28,20 +29,21 @@ module.exports = backbone.View.extend({
         this.$el.toggleClass('layout-v',w<h);
     },
     render: function () {
-        backbone.$.get('nowPlaying.html').then(data => this.el.innerHTML = data);
+        $.get('nowPlaying.html').then(data => this.el.innerHTML = data);
         this.fixLayout();
     },
     show: function () {
         this.update();
         this.__updater = setInterval(() => this.update(), 500);
+        $(this.el).removeClass('hidden hiding').addClass('showing');
     },
     hide: function () {
         clearInterval(this.___updater);
-        this.el.className = 'hiding';
-        this.once('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', () => {
-            this.el.className = 'hidden';
-            this.trigger('hidden');
-        });
+        $(this.el).one('transitionend webkitTransitionEnd',() => {
+                    $(this.el).removeClass('hiding').addClass('hidden');
+                    this.trigger('hidden');
+                });
+        $(this.el).removeClass('hidden').addClass('hiding');
     },
     toggleRepeat:function(){
         if(this.$('.command-repeat').is('.active'))
@@ -86,7 +88,7 @@ module.exports = backbone.View.extend({
                 status.art = that.artFetchCache[cacheKey].art;
             }
             status.percent = timeParts.length == 2 ? (timeParts[0] * 100 / timeParts[1]) + '%' : 0;
-            console.log(status);
+            //console.log(status);
             _.each(that.$('[data-attr]'), elem => {
                 let value = status;
                 elem = backbone.$(elem);
@@ -99,7 +101,7 @@ module.exports = backbone.View.extend({
                 }
                 if (elem.data('css-property')) {
                     elem.css(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
-                    console.log(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
+                    //console.log(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
                 } else if (elem.data('css-class'))
                     elem.toggleClass(elem.data('css-class'), value == (elem.data('true-value') || 1));
                 else if (elem.data('attribute')) {

@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <NodeExePath>C:\Users\hhj38\Application Data\npm\node_modules\electron-prebuilt\dist\electron.exe</NodeExePath>
+    <NodeExePath>c:\users\USER\AppData\roaming\npm\node_modules\electron\dist\electron.exe</NodeExePath>
     <StartWebBrowser>False</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -20,6 +20,7 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Compile Include="gulpfile.js" />
+    <Compile Include="js\playlist.js" />
     <Compile Include="tmpc.js" />
     <Compile Include="js\app.js" />
     <Compile Include="js\artFetcher.js" />
@@ -28,9 +29,20 @@
     <Compile Include="js\playlistModel.js" />
     <Compile Include="js\songModel.js" />
     <Content Include="res\font-awesome.css" />
+    <Content Include="res\fontawesome-webfont.eot" />
+    <Content Include="res\fontawesome-webfont.ttf" />
+    <Content Include="res\fontawesome-webfont.woff" />
+    <Content Include="res\fontawesome-webfont.woff2" />
+    <Content Include="res\FontAwesome.otf" />
     <Content Include="res\main.css" />
     <Content Include="res\fontawesome-webfont.svg" />
+    <Content Include="src\layout.less" />
+    <Content Include="src\nowPlaying.less" />
+    <Content Include="src\playlist.less" />
+    <Content Include="src\utils.less" />
     <Content Include="templates\interface.html" />
+    <Content Include="templates\playlistItems.html" />
+    <Content Include="templates\playlist.html" />
     <Content Include="templates\nowPlaying.html" />
   </ItemGroup>
   <ItemGroup>
@@ -40,28 +52,58 @@
     <Folder Include="templates" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
+    <Folder Include="typings\globals\async\" />
     <Folder Include="typings\globals\backbone\" />
+    <Folder Include="typings\globals\dateformat\" />
+    <Folder Include="typings\globals\defaults\" />
     <Folder Include="typings\globals\gulp-concat\" />
     <Folder Include="typings\globals\gulp-less\" />
     <Folder Include="typings\globals\gulp\" />
     <Folder Include="typings\globals\jquery\" />
+    <Folder Include="typings\globals\jsbn\" />
+    <Folder Include="typings\globals\less\" />
     <Folder Include="typings\globals\lodash\" />
+    <Folder Include="typings\globals\lru-cache\" />
     <Folder Include="typings\globals\mkdirp\" />
     <Folder Include="typings\globals\node\" />
+    <Folder Include="typings\globals\object-assign\" />
+    <Folder Include="typings\globals\once\" />
     <Folder Include="typings\globals\request\" />
     <Folder Include="typings\globals\sanitize-filename\" />
+    <Folder Include="typings\globals\semver\" />
+    <Folder Include="typings\globals\underscore\" />
+    <Folder Include="typings\globals\uuid\" />
+    <Folder Include="typings\globals\vinyl\" />
+    <Folder Include="typings\globals\when\" />
+    <Folder Include="typings\globals\window-size\" />
+    <Folder Include="typings\globals\zepto\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="typings\globals\async\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\backbone\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\dateformat\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\defaults\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\gulp-concat\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\gulp-less\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\gulp\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\jquery\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jsbn\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\less\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\lodash\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\lru-cache\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\mkdirp\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\object-assign\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\once\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\request\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\sanitize-filename\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\semver\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\underscore\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\uuid\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\vinyl\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\when\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\window-size\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\zepto\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

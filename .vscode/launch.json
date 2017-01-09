@@ -8,7 +8,7 @@
 	"stopOnEntry": false,
 	"args": [],
 	"cwd": "${workspaceRoot}",
-	"runtimeExecutable": "C:\\users\\Andrey\\AppData\\Roaming\\npm\\node_modules\\electron-prebuilt\\dist\\electron.exe",
+	"runtimeExecutable": "C:\\users\\USER\\AppData\\Roaming\\npm\\node_modules\\electron\\dist\\electron.exe",
 	"runtimeArgs": [],
 	"env": { },
 	"sourceMaps": false,

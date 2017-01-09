@@ -9,14 +9,22 @@
 <body>
     <div class="hgrid">
         <div class="mode-bar">
-            <button type="button" class="nowPlaying">Now playing</button>
-            <button type="button" class="playlist">Playlist</button>
-            <button type="button" class="filesystem">Filesystem</button>
+            <button type="button" data-view="nowPlaying">
+                <span class="fa fa-play-circle"></span>
+                Now playing
+            </button>
+            <button type="button" data-view="playlist">
+                <span class="fa fa-list"></span>
+                Playlist
+            </button>
+            <button type="button" data-view="filesystem">
+                <span class="fa fa-hdd-o"></span>
+                Filesystem
+            </button>
         </div>
-        <div class="mode-content">            
+        <div class="mode-content">
         </div>
     </div>
-    <div class="status">Status bar</div>
     <script src="../js/app.js"></script>
 </body>
 

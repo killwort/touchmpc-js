@@ -5,7 +5,8 @@ module.exports = backbone.Collection.extend({
         return attrs['Id'];
     },
     fetch: function () {
-        mpdCommand('playlistinfo').then(resp => {
+        return mpdCommand('playlistinfo').then(resp => {
+            console.log('Playlist',resp)
             var props = formatResponse(resp.data);
             var lastStart = 0;
             var models=[];
@@ -17,6 +18,8 @@ module.exports = backbone.Collection.extend({
             }
             models.push(new songModel(props.slice(lastStart, i),{parse:true}));
             this.reset(models);
+        },err=>{
+            console.log('Cannot fetch playlist',err);
         });
     }
 });

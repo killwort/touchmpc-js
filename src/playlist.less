@@ -1,0 +1,27 @@
+.playlist {
+    .playlist-table {
+        width:100%;
+        table{
+            width:100%;
+        }
+        &.body{
+            overflow:auto;
+        }
+        tr{
+            td,th{
+                width:50%;
+                overflow:hidden;
+                text-overflow:ellipsis;
+            }
+            td:nth-child(2n),th:nth-child(2n){
+                width:45%;
+            }
+            td:nth-child(3n),th:nth-child(3n){
+                width:5%;
+            }
+        }
+        tr:nth-child(2n) {
+            background: #404040;
+        }
+    }    
+}

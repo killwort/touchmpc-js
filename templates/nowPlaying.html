@@ -1,21 +1,25 @@
 <div class="art-container">
-	<img class="art" src="" data-attr="art" data-attribute="src" />
+    <img class="art" src="" data-attr="art" data-attribute="src" />
 </div>
 <div class="controls-container">
-	<span class="fa fa-repeat command-repeat control toggle" data-attr="repeat" data-css-class="active"></span>
-	<span class="fa fa-random command-shuffle control toggle" data-attr="random" data-css-class="active"></span>
-	<span class="fa fa-fast-backward command-previous control playback"></span>
-	<span class="fa fa-stop command-stop control playback" data-attr="state" data-css-property="display" data-value-expression="value=='play'?'inline-block':'none'"></span>
-	<span class="fa fa-play command-play control playback" data-attr="state" data-css-property="display" data-value-expression="value!='play'?'inline-block':'none'"></span>
-	<span class="fa fa-fast-forward command-next control playback"></span>
+    <div class="mode-controls">
+        <span class="fa fa-repeat command-repeat control toggle" data-attr="repeat" data-css-class="active"></span>
+        <span class="fa fa-random command-shuffle control toggle" data-attr="random" data-css-class="active"></span>
+    </div>
+    <div class="playback-controls">
+        <span class="fa fa-fast-backward command-previous control playback"></span>
+        <span class="fa fa-stop command-stop control playback" data-attr="state" data-css-property="display" data-value-expression="value=='play'?'inline-block':'none'"></span>
+        <span class="fa fa-play command-play control playback" data-attr="state" data-css-property="display" data-value-expression="value!='play'?'inline-block':'none'"></span>
+        <span class="fa fa-fast-forward command-next control playback"></span>
+    </div>
 </div>
 <div class="metadata-container">
-	<span class="metadata-title" data-attr="songModel.Title"></span>
-	<span class="metadata-artist" data-attr="songModel.Artist"></span>
-	<span class="metadata-album" data-attr="songModel.Album"></span>
+    <span class="metadata-title" data-attr="songModel.Title"></span>
+    <span class="metadata-artist" data-attr="songModel.Artist"></span>
+    <span class="metadata-album" data-attr="songModel.Album"></span>
 </div>
 <div class="progress-container">
-	<span class="progress-underlay">
-		<span class="progress-overlay" data-attr="percent" data-css-property="max-width"></span>
-	</span>
+    <span class="progress-underlay">
+        <span class="progress-overlay" data-attr="percent" data-css-property="max-width"></span>
+    </span>
 </div>
