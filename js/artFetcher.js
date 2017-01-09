@@ -8,12 +8,15 @@ const cacheRoot = path.join(process.env.HOME || process.env.USERPROFILE, '.touch
 
 let fetch = function (state) {
     return new Promise(function (resolve, reject) {
-        console.log('fetching art for', state);
         aa(state.artist, state.album, 'extralarge', (err, url) => {
             if (err)
                 reject(err);
-            state.url = url;
-            resolve(state);
+            else if (!url)
+                reject(false);
+            else {
+                state.url = url;
+                resolve(state);
+            }
         });
     });
 };
@@ -21,7 +24,6 @@ let cached = function (state) {
     return new Promise(function (resolve, reject) {
         var cachedName = path.join(cacheRoot, sanitize(state.artist), sanitize(state.album) + '.img');
         if (fs.existsSync(cachedName)) {
-            console.log('returned cached art for', state);
             resolve(cachedName);
         } else
             reject(state);
@@ -30,7 +32,6 @@ let cached = function (state) {
 let cache = function (state) {
     return new Promise(function (resolve, reject) {
         var cachedName = path.join(cacheRoot, sanitize(state.artist), sanitize(state.album) + '.img');
-        console.log('caching art for', state);
         mkdirp(path.dirname(cachedName), function () {
             var strm=fs.createWriteStream(cachedName);
             strm.on('close',() => resolve(cachedName));
@@ -40,9 +41,11 @@ let cache = function (state) {
         });
     });
 };
-
+let def = function() {
+    return "../res/default-album-art.png";
+};
 module.exports = {
     fetchArt: function (artist, album) {
-        return cached({ artist, album }).then(null, state => fetch(state).then(cache));
+        return cached({ artist, album }).then(null, state => fetch(state).then(cache,def));
     }
 };

@@ -50,8 +50,8 @@ ipc.on('mpd-update', (event, system) => {
 let callbacks = {};
 let cmds={};
 ipc.on('mpd-command-response', (event, err, data, reqId) => {
-    /*if(cmds[reqId].command!='status')
-        console.log('CMD',cmds[reqId].command,cmds[reqId].args,'->', err, data);*/
+    if(cmds[reqId].command!='status')
+        console.log('CMD',cmds[reqId].command,cmds[reqId].args,'->', err, data);
     callbacks[reqId](event, err, data);
     delete callbacks[reqId];
     delete cmds[reqId];
