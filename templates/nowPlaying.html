@@ -1,5 +1,7 @@
 <div class="art-container">
-    <img class="art" src="" data-attr="art" data-attribute="src" />
+    <div class="art">
+        <img src="" data-attr="art" data-attribute="src" />
+    </div>
 </div>
 <div class="controls-container">
     <div class="mode-controls">
@@ -7,10 +9,10 @@
         <span class="fa fa-random command-shuffle control toggle" data-attr="random" data-css-class="active"></span>
     </div>
     <div class="playback-controls">
-        <span class="fa fa-fast-backward command-previous control playback"></span>
+        <span class="fa fa-fast-backward command-previous control playback" data-attr="state" data-css-class="disabled" data-true-value="stop"></span>
         <span class="fa fa-stop command-stop control playback" data-attr="state" data-css-property="display" data-value-expression="value=='play'?'inline-block':'none'"></span>
         <span class="fa fa-play command-play control playback" data-attr="state" data-css-property="display" data-value-expression="value!='play'?'inline-block':'none'"></span>
-        <span class="fa fa-fast-forward command-next control playback"></span>
+        <span class="fa fa-fast-forward command-next control playback" data-attr="state" data-css-class="disabled" data-true-value="stop"></span>
     </div>
 </div>
 <div class="metadata-container">

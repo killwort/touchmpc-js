@@ -1,27 +1,47 @@
 .playlist {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden;
+
     .playlist-table {
-        width:100%;
-        table{
-            width:100%;
+        width: 100%;
+
+        &.head {
+            flex: 0 0 auto;
         }
-        &.body{
-            overflow:auto;
+
+        &.body {
+            flex: 0 0 100%;
+            overflow: auto;
         }
-        tr{
-            td,th{
-                width:50%;
-                overflow:hidden;
-                text-overflow:ellipsis;
+
+        table {
+            width: 100%;
+
+            tr {
+                td, th {
+                    width: 5%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-wrap: none;
+                }
+
+                td:nth-child(2), th:nth-child(2) {
+                    width: 45%;
+                }
+
+                td:nth-child(3), th:nth-child(3) {
+                    width: 45%;
+                }
+
+                td:nth-child(4), th:nth-child(4) {
+                    width: 5%;
+                }
             }
-            td:nth-child(2n),th:nth-child(2n){
-                width:45%;
-            }
-            td:nth-child(3n),th:nth-child(3n){
-                width:5%;
+
+            tr:nth-child(2n) {
+                background: #404040;
             }
         }
-        tr:nth-child(2n) {
-            background: #404040;
-        }
-    }    
+    }
 }

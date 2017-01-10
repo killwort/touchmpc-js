@@ -66,6 +66,21 @@ body .status {
   flex: 0 0 20px;
 }
 
+.nowPlaying.layout-v {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.nowPlaying.layout-v .art-container {
+  flex: 1 1 auto;
+}
+.nowPlaying.layout-v .controls-container {
+  position: static;
+  font-size: 18px;
+  margin-top: -20px;
+}
+.nowPlaying.layout-v .controls-container .playback-controls .control {
+  font-size: 24px;
+}
 .nowPlaying.layout-h {
   display: flex;
   flex-flow: column nowrap;
@@ -73,17 +88,30 @@ body .status {
   justify-content: center;
 }
 .nowPlaying.layout-h .art-container {
-  flex: 1 0 auto;
-  display: flex;
-  flex-flow: column nowrap;
+  flex: 1 1 auto;
+}
+.nowPlaying .art-container {
+  display: block;
   align-content: stretch;
-  justify-content: center;
+  position: relative;
 }
-.nowPlaying.layout-h .art-container .art {
-  flex: 1 0 auto;
+.nowPlaying .art-container .art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+.nowPlaying .art-container .art img {
+  display: block;
   object-fit: contain;
+  height: 100%;
+  width: 100%;
 }
-.nowPlaying.layout-h .controls-container {
+.nowPlaying .controls-container {
   position: absolute;
   font-size: 24px;
   top: 0;
@@ -95,55 +123,59 @@ body .status {
   align-content: stretch;
   justify-content: center;
 }
-.nowPlaying.layout-h .controls-container .playback-controls {
+.nowPlaying .controls-container .playback-controls {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: stretch;
   flex: 2 0 auto;
 }
-.nowPlaying.layout-h .controls-container .playback-controls .control {
+.nowPlaying .controls-container .playback-controls .control {
   font-size: 50px;
 }
-.nowPlaying.layout-h .controls-container .mode-controls {
+.nowPlaying .controls-container .playback-controls .command-play,
+.nowPlaying .controls-container .playback-controls .command-stop {
+  opacity: 0.5;
+}
+.nowPlaying .controls-container .mode-controls {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: stretch;
   flex: 1 0 auto;
 }
-.nowPlaying.layout-h .metadata-container {
+.nowPlaying .metadata-container {
   flex: 0 0 auto;
 }
-.nowPlaying.layout-h .progress-container {
+.nowPlaying .progress-container {
   flex: 0 0 15px;
 }
-.nowPlaying .progress-container .progress-underlay {
+.progress-container .progress-underlay {
   display: block;
   height: 5px;
   margin-top: 5px;
   background: #555;
 }
-.nowPlaying .progress-container .progress-underlay .progress-overlay {
+.progress-container .progress-underlay .progress-overlay {
   display: block;
   height: 5px;
   background: #eee;
   width: 100%;
   transition: max-width linear 0.2s;
 }
-.nowPlaying .metadata-container {
+.metadata-container {
   font-weight: bold;
   text-align: center;
 }
-.nowPlaying .metadata-container .metadata-artist:before {
+.metadata-container .metadata-artist:before {
   content: ' by ';
   font-weight: normal;
 }
-.nowPlaying .metadata-container .metadata-album:before {
+.metadata-container .metadata-album:before {
   content: ' from ';
   font-weight: normal;
 }
-.nowPlaying .controls-container .control {
+.controls-container .control {
   transition: all ease .3s;
   padding: .5em;
   cursor: pointer;
@@ -151,53 +183,67 @@ body .status {
   height: 1em;
   text-align: center;
 }
-.nowPlaying .controls-container .control.toggle {
+.controls-container .control.toggle {
   color: #777;
   cursor: pointer;
 }
-.nowPlaying .controls-container .control.toggle.active {
+.controls-container .control.toggle.active {
   color: #eee;
 }
-.nowPlaying .controls-container .control.playback {
+.controls-container .control.playback {
   border: 2px solid #eee;
   box-shadow: 0 0 27px rgba(65, 135, 255, 0);
   text-shadow: 0 0 27px rgba(65, 135, 255, 0);
   border-radius: 2em;
 }
-.nowPlaying .controls-container .control.playback.disabled {
+.controls-container .control.playback.disabled {
   color: #555;
 }
-.nowPlaying .controls-container .control.playback:hover {
+.controls-container .control.playback:hover {
   color: #fff;
   border-color: #fff;
   box-shadow: 0 0 27px #4187ff;
   text-shadow: 0 0 27px #4187ff;
 }
 
+.playlist {
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+}
 .playlist .playlist-table {
   width: 100%;
+}
+.playlist .playlist-table.head {
+  flex: 0 0 auto;
+}
+.playlist .playlist-table.body {
+  flex: 0 0 100%;
+  overflow: auto;
 }
 .playlist .playlist-table table {
   width: 100%;
 }
-.playlist .playlist-table.body {
-  overflow: auto;
-}
-.playlist .playlist-table tr td,
-.playlist .playlist-table tr th {
-  width: 50%;
+.playlist .playlist-table table tr td,
+.playlist .playlist-table table tr th {
+  width: 5%;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-wrap: none;
 }
-.playlist .playlist-table tr td:nth-child(2n),
-.playlist .playlist-table tr th:nth-child(2n) {
+.playlist .playlist-table table tr td:nth-child(2),
+.playlist .playlist-table table tr th:nth-child(2) {
   width: 45%;
 }
-.playlist .playlist-table tr td:nth-child(3n),
-.playlist .playlist-table tr th:nth-child(3n) {
+.playlist .playlist-table table tr td:nth-child(3),
+.playlist .playlist-table table tr th:nth-child(3) {
+  width: 45%;
+}
+.playlist .playlist-table table tr td:nth-child(4),
+.playlist .playlist-table table tr th:nth-child(4) {
   width: 5%;
 }
-.playlist .playlist-table tr:nth-child(2n) {
+.playlist .playlist-table table tr:nth-child(2n) {
   background: #404040;
 }
 

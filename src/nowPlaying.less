@@ -1,5 +1,18 @@
 .nowPlaying {
     &.layout-v {
+        display:flex;
+        flex-flow:column nowrap;
+        .art-container {
+            flex: 1 1 auto;
+        }
+        .controls-container{
+            position:static;
+            font-size:18px;
+            margin-top:-20px;
+            .playback-controls .control{
+                font-size:24px;
+            }
+        }
     }
 
     &.layout-h {
@@ -9,130 +22,153 @@
         justify-content: center;
 
         .art-container {
-            flex: 1 0 auto;
-            display: flex;
-            flex-flow: column nowrap;
-            align-content: stretch;
-            justify-content: center;
-
-            .art {
-                flex: 1 0 auto;
-                object-fit: contain;
-            }
+            flex: 1 1 auto;
         }
+    }
 
-        .controls-container {
+    .art-container {
+        display: block;
+        align-content: stretch;
+        position: relative;
+
+        .art {
             position: absolute;
-            font-size: 24px;
             top: 0;
+            left: 0;
             bottom: 0;
             right: 0;
-            left: 0;
-            display: flex;
-            flex-flow: column nowrap;
-            align-content:stretch;
-            justify-content:center;
-            .playback-controls{
-                display:flex;
-                flex-flow:row nowrap;
-                justify-content:space-between;
-                align-items:stretch;
-                flex:2 0 auto;
-                .control{
-                    font-size:50px;
-                }
-            }
-            .mode-controls{
-                display:flex;
-                flex-flow:row nowrap;
-                justify-content:space-between;
-                align-items:stretch;
-                flex:1 0 auto;
-            }
-        }
-
-        .metadata-container {
-            flex: 0 0 auto;
-        }
-
-        .progress-container {
-            flex: 0 0 15px;
-        }
-    }
-
-
-    .progress-container {
-        .progress-underlay {
+            margin: 0 auto;
             display: block;
-            height: 5px;
-            margin-top:5px;
-            background: #555;
+            text-align: center;
 
-            .progress-overlay {
+            img {
                 display: block;
-                height: 5px;
-                background: #eee;
+                object-fit: contain;
+                height: 100%;
                 width: 100%;
-                transition: max-width linear 0.2s;
-            }
-        }
-    }
-
-    .metadata-container {
-        font-weight: bold;
-        text-align:center;
-        .metadata-title {
-        }
-
-        .metadata-artist {
-            &:before {
-                content: ' by ';
-                font-weight: normal;
-            }
-        }
-
-        .metadata-album {
-            &:before {
-                content: ' from ';
-                font-weight: normal;
             }
         }
     }
 
     .controls-container {
-        .control {
-            transition: all ease .3s;
-            padding: .5em;
-            cursor: pointer;
-            width: 1em;
-            height: 1em;
-            text-align: center;
+        position: absolute;
+        font-size: 24px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        display: flex;
+        flex-flow: column nowrap;
+        align-content: stretch;
+        justify-content: center;
 
-            &.toggle {
-                color: #777;
-                cursor: pointer;
+        .playback-controls {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: stretch;
+            flex: 2 0 auto;
 
-                &.active {
-                    color: #eee;
-                }
+            .control {
+                font-size: 50px;
             }
 
-            &.playback {
-                border: 2px solid #eee;
-                box-shadow: 0 0 27px rgba(65,135,255,0);
-                text-shadow: 0 0 27px rgba(65,135,255,0);
-                border-radius: 2em;
+            .command-play, .command-stop {
+                opacity: 0.5;
+            }
+        }
 
-                &.disabled {
-                    color: #555;
-                }
+        .mode-controls {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            align-items: stretch;
+            flex: 1 0 auto;
+        }
+    }
 
-                &:hover {
-                    color: #fff;
-                    border-color: #fff;
-                    box-shadow: 0 0 27px rgba(65,135,255,1);
-                    text-shadow: 0 0 27px rgba(65,135,255,1);
-                }
+    .metadata-container {
+        flex: 0 0 auto;
+    }
+
+    .progress-container {
+        flex: 0 0 15px;
+    }
+}
+
+
+.progress-container {
+    .progress-underlay {
+        display: block;
+        height: 5px;
+        margin-top: 5px;
+        background: #555;
+
+        .progress-overlay {
+            display: block;
+            height: 5px;
+            background: #eee;
+            width: 100%;
+            transition: max-width linear 0.2s;
+        }
+    }
+}
+
+.metadata-container {
+    font-weight: bold;
+    text-align: center;
+
+    .metadata-title {
+    }
+
+    .metadata-artist {
+        &:before {
+            content: ' by ';
+            font-weight: normal;
+        }
+    }
+
+    .metadata-album {
+        &:before {
+            content: ' from ';
+            font-weight: normal;
+        }
+    }
+}
+
+.controls-container {
+    .control {
+        transition: all ease .3s;
+        padding: .5em;
+        cursor: pointer;
+        width: 1em;
+        height: 1em;
+        text-align: center;
+
+        &.toggle {
+            color: #777;
+            cursor: pointer;
+
+            &.active {
+                color: #eee;
+            }
+        }
+
+        &.playback {
+            border: 2px solid #eee;
+            box-shadow: 0 0 27px rgba(65,135,255,0);
+            text-shadow: 0 0 27px rgba(65,135,255,0);
+            border-radius: 2em;
+
+            &.disabled {
+                color: #555;
+            }
+
+            &:hover {
+                color: #fff;
+                border-color: #fff;
+                box-shadow: 0 0 27px rgba(65,135,255,1);
+                text-shadow: 0 0 27px rgba(65,135,255,1);
             }
         }
     }

@@ -17,6 +17,8 @@ module.exports = backbone.View.extend({
         this.on('mpd-update', this.update);
         this.on('showing', this.show);
         this.on('hide', this.hide);
+        this.on('show', this.fixLayout);
+
         $(window).on('resize',_.bind(this.fixLayout,this));
         this.playlistModel = new (require('../js/playlistModel'))();
         this.playlistModel.fetch();
@@ -78,14 +80,19 @@ module.exports = backbone.View.extend({
             if (status.nextsongid)
                 status.nextSongModel = that.playlistModel.get(status.nextsongid);
             var timeParts = status.time ? status.time.split(':') : [];
-            var cacheKey = status.songModel ? status.songModel.get('Artist') + '|' + status.songModel.get('Album') : status.songid;
-            if (!that.artFetchCache[cacheKey]) {
-                let obj = that.artFetchCache[cacheKey] = {
-                    art: null
-                };
-                artFetcher.fetchArt(status.songModel.get('Artist'), status.songModel.get('Album')).then(url => obj.art = url);
-            } else {
-                status.art = that.artFetchCache[cacheKey].art;
+            if (status.songid || status.songModel) {
+                var cacheKey = status.songModel
+                    ? status.songModel.get('Artist') + '|' + status.songModel.get('Album')
+                    : status.songid;
+                if (!that.artFetchCache[cacheKey]) {
+                    let obj = that.artFetchCache[cacheKey] = {
+                        art: null
+                    };
+                    artFetcher.fetchArt(status.songModel.get('Artist'), status.songModel.get('Album'))
+                        .then(url => obj.art = url);
+                } else {
+                    status.art = that.artFetchCache[cacheKey].art;
+                }
             }
             status.percent = timeParts.length == 2 ? (timeParts[0] * 100 / timeParts[1]) + '%' : 0;
             //console.log(status);
@@ -102,9 +109,9 @@ module.exports = backbone.View.extend({
                 if (elem.data('css-property')) {
                     elem.css(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
                     //console.log(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
-                } else if (elem.data('css-class'))
+                } else if (elem.data('css-class')) {
                     elem.toggleClass(elem.data('css-class'), value == (elem.data('true-value') || 1));
-                else if (elem.data('attribute')) {
+                } else if (elem.data('attribute')) {
                     if (elem.attr(elem.data('attribute')) != value)
                         elem.attr(elem.data('attribute'), value);
                 } else

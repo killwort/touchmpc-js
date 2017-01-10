@@ -29,7 +29,7 @@ _.each(document.querySelectorAll('.mode-bar button'), btn => {
             _.each(document.getElementsByClassName('mode-content')[0].childNodes, n => document.getElementsByClassName('mode-content')[0].removeChild(n));
             currentView.trigger('showing');
             document.getElementsByClassName('mode-content')[0].appendChild(currentView.el);
-            currentView.trigger('show');
+            _.defer(() => currentView.trigger('show'));
         };
         if (currentView)
             currentView.trigger('hide').once('hidden', showNew);

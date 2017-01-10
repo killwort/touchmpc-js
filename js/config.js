@@ -12,7 +12,7 @@ module.exports = {
                     var defaults = {
                         mpd: {
                             port: 6600,
-                            host: 'router.mediaparts'
+                            host: 'localhost'
                         },
                         startingMode:'nowPlaying'
                     };
