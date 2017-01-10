@@ -1,3 +1,31 @@
+.controls-container {
+  display: flex;
+  flex-flow: column nowrap;
+  align-content: stretch;
+  justify-content: center;
+}
+.controls-container .playback-controls {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  flex: 2 0 auto;
+}
+.controls-container .playback-controls .control {
+  font-size: 50px;
+}
+.controls-container .playback-controls .command-play,
+.controls-container .playback-controls .command-stop {
+  opacity: 0.5;
+}
+.controls-container .mode-controls {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  flex: 1 0 auto;
+}
+
 body {
   background: black;
   justify-content: center;
@@ -118,31 +146,6 @@ body .status {
   bottom: 0;
   right: 0;
   left: 0;
-  display: flex;
-  flex-flow: column nowrap;
-  align-content: stretch;
-  justify-content: center;
-}
-.nowPlaying .controls-container .playback-controls {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: stretch;
-  flex: 2 0 auto;
-}
-.nowPlaying .controls-container .playback-controls .control {
-  font-size: 50px;
-}
-.nowPlaying .controls-container .playback-controls .command-play,
-.nowPlaying .controls-container .playback-controls .command-stop {
-  opacity: 0.5;
-}
-.nowPlaying .controls-container .mode-controls {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: stretch;
-  flex: 1 0 auto;
 }
 .nowPlaying .metadata-container {
   flex: 0 0 auto;
@@ -218,7 +221,7 @@ body .status {
   flex: 0 0 auto;
 }
 .playlist .playlist-table.body {
-  flex: 0 0 100%;
+  flex: 1 1 100%;
   overflow: auto;
 }
 .playlist .playlist-table table {
@@ -226,24 +229,60 @@ body .status {
 }
 .playlist .playlist-table table tr td,
 .playlist .playlist-table table tr th {
-  width: 5%;
   overflow: hidden;
   text-overflow: ellipsis;
   text-wrap: none;
 }
+.playlist .playlist-table table tr td:nth-child(1),
+.playlist .playlist-table table tr th:nth-child(1) {
+  width: 9%;
+}
+.playlist .playlist-table table tr td:nth-child(1) img,
+.playlist .playlist-table table tr th:nth-child(1) img {
+  max-width: 100%;
+  width: 100%;
+  object-fit: contain;
+}
 .playlist .playlist-table table tr td:nth-child(2),
 .playlist .playlist-table table tr th:nth-child(2) {
-  width: 45%;
+  width: 43%;
 }
 .playlist .playlist-table table tr td:nth-child(3),
 .playlist .playlist-table table tr th:nth-child(3) {
-  width: 45%;
+  width: 43%;
 }
 .playlist .playlist-table table tr td:nth-child(4),
 .playlist .playlist-table table tr th:nth-child(4) {
   width: 5%;
 }
+.playlist .playlist-table table tr.selected td {
+  background: #4040d0;
+}
+.playlist .playlist-table table tr.selected td:nth-child(1) {
+  position: relative;
+  /*&:after{
+                            content:'V';
+                            font-size:50px;
+                            position:absolute;
+                            top:0;
+                            left:0;
+                            bottom:0;
+                            right:0;
+                        }*/
+}
+.playlist .playlist-table table tr.current td {
+  background: #409040;
+}
 .playlist .playlist-table table tr:nth-child(2n) {
   background: #404040;
 }
-
+.playlist .controls-container {
+  flex: 0 0 auto;
+  flex-direction: row;
+}
+.playlist .controls-container .playback-controls {
+  flex: 1 1 auto;
+}
+.playlist .controls-container .playback-controls .control {
+  font-size: 24px;
+}

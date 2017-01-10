@@ -20,6 +20,7 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Compile Include="gulpfile.js" />
+    <Compile Include="js\playbackMixin.js" />
     <Compile Include="js\playlist.js" />
     <Compile Include="tmpc.js" />
     <Compile Include="js\app.js" />
@@ -41,7 +42,7 @@
     <Content Include="src\layout.less" />
     <Content Include="src\nowPlaying.less" />
     <Content Include="src\playlist.less" />
-    <Content Include="src\utils.less" />
+    <Content Include="src\controls.less" />
     <Content Include="templates\interface.html" />
     <Content Include="templates\playlistItems.html" />
     <Content Include="templates\playlist.html" />

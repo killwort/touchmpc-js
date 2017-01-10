@@ -5,7 +5,8 @@ const path = require('path');
 const sanitize = require("sanitize-filename");
 const mkdirp = require("mkdirp");
 const cacheRoot = path.join(process.env.HOME || process.env.USERPROFILE, '.touchmpc-js', 'albumart');
-
+const _ = require('lodash');
+const $ = require('backbone').$;
 let fetch = function (state) {
     return new Promise(function (resolve, reject) {
         aa(state.artist, state.album, 'extralarge', (err, url) => {
@@ -45,18 +46,32 @@ let def = function() {
     return "../res/default-album-art.png";
 };
 let currentFetches = {};
-
+let fetchArt = function(artist, album) {
+    var key = artist + '|' + album;
+    console.log('Requested', artist, album);
+    if (currentFetches[key]) {
+        return currentFetches[key];
+    }
+    return currentFetches[key] = cached({ artist, album })
+        .then(null, state => fetch(state).then(cache, def))
+        .then(data => {
+            delete currentFetches[key];
+            return data;
+        });
+};
 module.exports = {
-    fetchArt: function (artist, album) {
-        var key = artist + '|' + album;
-        if (currentFetches[key]) {
-            return currentFetches[key];
-        }
-        return currentFetches[key] = cached({ artist, album })
-            .then(null, state => fetch(state).then(cache, def))
-            .then(data => {
-                    delete currentFetches[key];
-                    return data;
-                });
+    fetchArt: fetchArt,
+    fetchAll:function(elements, metadataSelector) {
+        _.each(elements,
+            elem => {
+                var md = metadataSelector($(elem));
+                fetchArt(md.artist, md.album)
+                    .then(url => {
+                        console.log('done', url);
+                        var img = $('<img>');
+                        img.attr('src', url);
+                        $(elem).append(img);
+                    });
+            });
     }
 };

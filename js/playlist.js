@@ -1,30 +1,73 @@
 ﻿const backbone = require('backbone');
 const $=backbone.$;
-const ipc = require('electron').ipcRenderer;
 const _ = require('lodash');
-module.exports = backbone.View.extend({
+const artFetcher = require('../js/artFetcher');
+const ds=require('dragscroll');
+
+module.exports = backbone.View.extend(_.extend({
+    events: {
+        'click tr.item': 'toggleItemSelection',
+        'click .command-repeat': 'toggleRepeat',
+        'click .command-shuffle': 'toggleShuffle',
+        'click .command-previous': 'playPrevious',
+        'click .command-stop': 'playStop',
+        'click .command-play': 'playPlay',
+        'click .command-next': 'playNext',
+        'click .command-queue': 'queueSelected',
+        'click .command-remove': 'removeSelected'
+    },
     className: 'playlist animated-mode',
     initialize:function() {
         backbone.$.get('playlist.html').then(data => this.el.innerHTML = data);
         this.on('hide',this.hide);
         this.on('showing', this.show);
+        this.on('mpd-update', this.update);
+
         this.playlistModel = new (require('../js/playlistModel'))();
         this.playlistModel.fetch().then(_.bind(this.render, this));
+        this.artFetchCache = {};
     },
     render:function() {
         backbone.$.get('playlistItems.html')
             .then(data => {
-                this.$('.playlist-items').html(_.template(data)(this.playlistModel));
+                artFetcher.fetchAll(this.$('.playlist-items').html(_.template(data)(this.playlistModel)).find('.album-art'),node=> { return { artist: node.data('artist'), album: node.data('album') }; });
             });
     },
-    show:function(){
+    show: function () {
+        this.update();
+        this.__updater = setInterval(() => this.update(), 500);
+
         $(this.el).removeClass('hidden hiding').addClass('showing');
+        _.delay(() => ds.reset(),150);
     },
-    hide:function(){
+    hide: function () {
+        clearInterval(this.___updater);
+
         $(this.el).one('transitionend webkitTransitionEnd', () => {
             $(this.el).removeClass('hiding').addClass('hidden');
             this.trigger('hidden');
         });
         $(this.el).removeClass('hidden').addClass('hiding');
+    },
+    toggleItemSelection:function(ev) {
+        var t = $(ev.target);
+        if (!t.is('.item')) t = t.closest('.item');
+        t.toggleClass('selected');
+    },
+    queueSelected:function() {
+        _.each($(this.el).find('.item.selected').removeClass('selected'), elem => {
+            mpdCommand('prioid 1 '+$(elem).data('id'));
+        });
+    },
+    removeSelected: function () {
+        _.each($(this.el).find('.item.selected').remove(),elem => {
+            mpdCommand('deleteid '+$(elem).data('id'));
+        });
+    },
+    updateMore: function (status) {
+        var newCurrent = $(this.el).find('.item[data-id=' + status.songModel.get('Id') + ']');
+        if (newCurrent.is('.current')) return;
+        $(this.el).find('.item.current').removeClass('current');
+        newCurrent.addClass('current').get(0).scrollIntoView();
     }
-});
+}, require('../js/playbackMixin.js')));
