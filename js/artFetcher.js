@@ -44,8 +44,19 @@ let cache = function (state) {
 let def = function() {
     return "../res/default-album-art.png";
 };
+let currentFetches = {};
+
 module.exports = {
     fetchArt: function (artist, album) {
-        return cached({ artist, album }).then(null, state => fetch(state).then(cache,def));
+        var key = artist + '|' + album;
+        if (currentFetches[key]) {
+            return currentFetches[key];
+        }
+        return currentFetches[key] = cached({ artist, album })
+            .then(null, state => fetch(state).then(cache, def))
+            .then(data => {
+                    delete currentFetches[key];
+                    return data;
+                });
     }
 };

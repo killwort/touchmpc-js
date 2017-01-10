@@ -28,12 +28,14 @@
     <Compile Include="js\nowPlaying.js" />
     <Compile Include="js\playlistModel.js" />
     <Compile Include="js\songModel.js" />
+    <Content Include="res\default-album-art.png" />
     <Content Include="res\font-awesome.css" />
     <Content Include="res\fontawesome-webfont.eot" />
     <Content Include="res\fontawesome-webfont.ttf" />
     <Content Include="res\fontawesome-webfont.woff" />
     <Content Include="res\fontawesome-webfont.woff2" />
     <Content Include="res\FontAwesome.otf" />
+    <Content Include="res\loading-album-art.png" />
     <Content Include="res\main.css" />
     <Content Include="res\fontawesome-webfont.svg" />
     <Content Include="src\layout.less" />

@@ -80,22 +80,16 @@ module.exports = backbone.View.extend({
             if (status.nextsongid)
                 status.nextSongModel = that.playlistModel.get(status.nextsongid);
             var timeParts = status.time ? status.time.split(':') : [];
-            if (status.songid || status.songModel) {
-                var cacheKey = status.songModel
-                    ? status.songModel.get('Artist') + '|' + status.songModel.get('Album')
-                    : status.songid;
-                if (!that.artFetchCache[cacheKey]) {
-                    let obj = that.artFetchCache[cacheKey] = {
-                        art: null
-                    };
-                    artFetcher.fetchArt(status.songModel.get('Artist'), status.songModel.get('Album'))
-                        .then(url => obj.art = url);
-                } else {
-                    status.art = that.artFetchCache[cacheKey].art;
-                }
+            if (status.songModel) {
+                var ckey = status.songModel.get('Artist') + '|' + status.songModel.get('Album');
+                status.art = that.artFetchCache[ckey] || '../res/loading-album-art.png';
+                artFetcher.fetchArt(status.songModel.get('Artist'), status.songModel.get('Album'))
+                    .then(url => {
+                            that.artFetchCache[ckey] = url;
+                        }
+                    );
             }
             status.percent = timeParts.length == 2 ? (timeParts[0] * 100 / timeParts[1]) + '%' : 0;
-            //console.log(status);
             _.each(that.$('[data-attr]'), elem => {
                 let value = status;
                 elem = backbone.$(elem);
@@ -108,7 +102,6 @@ module.exports = backbone.View.extend({
                 }
                 if (elem.data('css-property')) {
                     elem.css(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
-                    //console.log(elem.data('css-property'), elem.data('value-expression') ? eval(elem.data('value-expression')) : value);
                 } else if (elem.data('css-class')) {
                     elem.toggleClass(elem.data('css-class'), value == (elem.data('true-value') || 1));
                 } else if (elem.data('attribute')) {
