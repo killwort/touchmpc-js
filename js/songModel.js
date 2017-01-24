@@ -5,6 +5,7 @@ module.exports = backbone.Model.extend({
         var rv = _.fromPairs(src);
 
         rv.TimeMS = Math.floor(rv.Time / 60) + ':' + (rv.Time % 60 < 10 ? '0' : '') + (rv.Time % 60);
+        rv.FullPath = rv.file;
         return rv;
     }
 });

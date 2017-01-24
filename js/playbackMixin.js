@@ -25,7 +25,7 @@ module.exports = {
     playPlay: function () {
         mpdCommand('play');
     },
-    update: function () {
+    update: function (sender,subsystem) {
         var that = this;
         mpdCommand('status').then(function (response) {
             var status = _.fromPairs(formatResponse(response.data));
@@ -67,7 +67,7 @@ module.exports = {
                     elem.text(value);
 
             });
-            if (that.updateMore) that.updateMore(status);
+            if (that.updateMore) that.updateMore(status,subsystem);
         });
     }
 };

@@ -1,5 +1,7 @@
 const backbone = require('backbone');
 const $ = backbone.$;
+const ipc = require('electron').ipcRenderer;
+
 module.exports = backbone.View.extend(_.extend({
     events:{
         'click .command-repeat':'toggleRepeat',
@@ -12,7 +14,7 @@ module.exports = backbone.View.extend(_.extend({
     className:'nowPlaying animated-mode',
     initialize: function () {
         this.render();
-        this.on('mpd-update', this.update);
+        ipc.on('mpd-update', _.bind(this.update, this));
         this.on('showing', this.show);
         this.on('hide', this.hide);
         this.on('show', this.fixLayout);

@@ -20,8 +20,12 @@
   <ItemGroup>
     <Content Include="package.json" />
     <Compile Include="gulpfile.js" />
+    <Compile Include="js\filesystemItem.js" />
     <Compile Include="js\playbackMixin.js" />
+    <Compile Include="js\filesystem.js" />
     <Compile Include="js\playlist.js" />
+    <Compile Include="js\filesystemModel.js" />
+    <Compile Include="js\filesystemEntryModel.js" />
     <Compile Include="tmpc.js" />
     <Compile Include="js\app.js" />
     <Compile Include="js\artFetcher.js" />
@@ -30,6 +34,7 @@
     <Compile Include="js\playlistModel.js" />
     <Compile Include="js\songModel.js" />
     <Content Include="res\default-album-art.png" />
+    <Content Include="res\directory.png" />
     <Content Include="res\font-awesome.css" />
     <Content Include="res\fontawesome-webfont.eot" />
     <Content Include="res\fontawesome-webfont.ttf" />
@@ -39,11 +44,16 @@
     <Content Include="res\loading-album-art.png" />
     <Content Include="res\main.css" />
     <Content Include="res\fontawesome-webfont.svg" />
+    <Content Include="res\parent.png" />
+    <Content Include="res\playlist.png" />
     <Content Include="src\layout.less" />
     <Content Include="src\nowPlaying.less" />
+    <Content Include="src\filesystem.less" />
     <Content Include="src\playlist.less" />
     <Content Include="src\controls.less" />
     <Content Include="templates\interface.html" />
+    <Content Include="templates\filesystem.html" />
+    <Content Include="templates\filesystemItem.html" />
     <Content Include="templates\playlistItems.html" />
     <Content Include="templates\playlist.html" />
     <Content Include="templates\nowPlaying.html" />

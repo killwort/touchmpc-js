@@ -48,7 +48,7 @@ let def = function() {
 let currentFetches = {};
 let fetchArt = function(artist, album) {
     var key = artist + '|' + album;
-    console.log('Requested', artist, album);
+    //console.log('Requested', artist, album);
     if (currentFetches[key]) {
         return currentFetches[key];
     }
@@ -67,7 +67,7 @@ module.exports = {
                 var md = metadataSelector($(elem));
                 fetchArt(md.artist, md.album)
                     .then(url => {
-                        console.log('done', url);
+                        //console.log('done', url);
                         var img = $('<img>');
                         img.attr('src', url);
                         $(elem).append(img);

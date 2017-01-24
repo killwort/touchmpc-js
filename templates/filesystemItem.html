@@ -1,0 +1,15 @@
+<% if(get('file')){ %>
+<div class="album-art art" data-artist="<%=get('Artist')%>" data-album="<%=get('Album')%>"></div>
+<div class="name"><%=get('Title')%></div>
+<% }else{ %>
+<div class="art"><img src="../res/<%=get('Type')%>.png"/></div>
+<div class="name"><%=get('Name')%></div>
+<% } %>
+<div class="filesystem-controls">
+    <div class="control command-add">
+        <span class="fa fa-plus "></span>
+    </div>
+    <div class="control command-replace">
+        <span class="fa fa-recycle"></span>
+    </div>
+</div>

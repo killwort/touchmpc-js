@@ -3,6 +3,7 @@ const $=backbone.$;
 const _ = require('lodash');
 const artFetcher = require('../js/artFetcher');
 const ds=require('dragscroll');
+const ipc = require('electron').ipcRenderer;
 
 module.exports = backbone.View.extend(_.extend({
     events: {
@@ -21,10 +22,11 @@ module.exports = backbone.View.extend(_.extend({
         backbone.$.get('playlist.html').then(data => this.el.innerHTML = data);
         this.on('hide',this.hide);
         this.on('showing', this.show);
-        this.on('mpd-update', this.update);
+        ipc.on('mpd-update', _.bind(this.update, this));
 
         this.playlistModel = new (require('../js/playlistModel'))();
-        this.playlistModel.fetch().then(_.bind(this.render, this));
+        this.playlistModel.on('fetched', _.bind(this.render, this));
+        this.playlistModel.fetch();//.then(_.bind(this.render, this));
         this.artFetchCache = {};
     },
     render:function() {
@@ -64,10 +66,13 @@ module.exports = backbone.View.extend(_.extend({
             mpdCommand('deleteid '+$(elem).data('id'));
         });
     },
-    updateMore: function (status) {
-        var newCurrent = $(this.el).find('.item[data-id=' + status.songModel.get('Id') + ']');
+    updateMore: function (status, subsystem) {
+        var newCurrent = status.songModel
+            ? $(this.el).find('.item[data-id=' + status.songModel.get('Id') + ']')
+            : $('<div>');
         if (newCurrent.is('.current')) return;
         $(this.el).find('.item.current').removeClass('current');
-        newCurrent.addClass('current').get(0).scrollIntoView();
+        newCurrent.addClass('current');
+        if (newCurrent.length) newCurrent.get(0).scrollIntoView();
     }
 }, require('../js/playbackMixin.js')));
