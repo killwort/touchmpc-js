@@ -24,10 +24,10 @@ ipcMain.on('interface-ready',
     event => {
         var connect = () => {
             mpdClientPromise.then(mpd => {
-                mpd.on('system',
-                    name => event.sender.send('mpd-update', name));
+                    mpd.on('system', name => event.sender.send('mpd-update', name));
                     mpd.on('error', () => event.sender.send('mpd-error', arguments));
-            },
+                    event.sender.send('mpd-update', 'playlist');
+                },
                 () => {
                     mpdClientPromise = getMpdConnection();
                     connect();
